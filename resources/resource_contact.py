@@ -95,4 +95,4 @@ class Contact(Meta):
                 return {'message': f'Internal error, {error}'}, 500
 
         # Se não for encontrado retorna a mensagem
-        return {'message': 'Contact not found or deleted'}, 101
+        return {'message': 'Contact not found or deleted'}
