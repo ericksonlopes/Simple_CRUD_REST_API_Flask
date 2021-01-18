@@ -11,6 +11,7 @@ class Meta(Resource):
 
 class Contacts(Meta):
     def get(self):
+        # retorna uma lista
         return {'All Contacts.': [contact.json() for contact in ContactModel.query.all()]}
 
     def post(self, ):
@@ -43,4 +44,13 @@ class Contact(Meta):
         print(dados)
 
     def delete(self, contact_id):
-        pass
+        find_contact = ContactModel.find_contact_or_number({'contact_id': contact_id, 'phone': False})
+
+        if find_contact:
+            try:
+                find_contact.delete_contact()
+                return {'message': f"Contact '{contact_id}' deleted!"}
+            except Exception as error:
+                return {'message': f'Internal error, {error}'}
+
+        return {'message': 'Contact not found or deleted'}

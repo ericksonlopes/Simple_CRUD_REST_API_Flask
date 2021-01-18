@@ -19,7 +19,7 @@ def create_database():
 
 # Caminho e recursos da aplicação
 api.add_resource(Contacts, '/contacts')
-api.add_resource(Contact, '/contact/contact_id')
+api.add_resource(Contact, '/contact/<int:contact_id>')
 
 if __name__ == '__main__':
     from sql_alchemy import db
