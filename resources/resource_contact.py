@@ -51,7 +51,34 @@ class Contact(Meta):
         return {'Message': "Contact not found"}, 404
 
     def put(self, contact_id):
+        # Cria o objeto com os dados da requirição
         dados = Contacts.arguments.parse_args()
+
+        # procura o id do contato
+        find_contact = ContactModel.find_contact_or_number({'contact_id': contact_id, 'phone': False})
+
+        # se for encontrado o contato requirido
+        if find_contact:
+            # Joga os novos dados recebido nas variaveis internas da classe
+            find_contact.update_contact(**dados)
+            try:
+                # tenta salvar a alteração (o flask tem conhecimento suficiente para diferenciar salvar/modificar)
+                find_contact.save_contact()
+            except Exception as error:
+                return {'message': f'Error updating contact, {error}'}, 500
+            return find_contact.json(), 200
+
+        # Caso não seja encontrado o contato, cria um novo
+        try:
+            # Joga os novos dados recebido nas variaveis internas da classe
+            find_contact = ContactModel(**dados)
+            # executa a função que slva os contatos
+            find_contact.save_contact()
+
+        except Exception as error:
+            return {'message': f'Error saving contact, {error}'}
+        # Retorna o ojb em forma de json
+        return find_contact.json(), 201
 
     def delete(self, contact_id):
         # Executa função que pesquisa o contact_id

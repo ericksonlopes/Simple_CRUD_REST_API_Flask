@@ -5,8 +5,8 @@ class ContactModel(db.Model):
     __tablename__ = 'contacts'
 
     contact_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    phone = db.Column(db.Integer, unique=True)
+    name = db.Column(db.String, nullable=False)
+    phone = db.Column(db.Integer, unique=True, nullable=False)
 
     def __init__(self, name, phone):
         self.name = name
@@ -54,3 +54,9 @@ class ContactModel(db.Model):
         db.session.delete(self)
         # realiza o commit para salvar as alterações
         db.session.commit()
+
+    # Atualiza contato
+    def update_contact(self, name, phone):
+        # Incrementa os novos dados nas variaveis obj
+        self.name = name
+        self.phone = phone
