@@ -18,6 +18,12 @@ class Contacts(Meta):
         if ContactModel.find_contact(phone=data['phone']):
             return {'Message': "The number sent already exists"}
         try:
+            new_contact = ContactModel(**data)
+            new_contact.save_contact()
+        except Exception as err:
+            return {'Message': f'Ops!, error saving phone : {err}'}
+
+        return new_contact.json()
 
 
 class Contact(Meta):

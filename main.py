@@ -6,7 +6,7 @@ from resources.resource_contact import Contacts, Contact
 app = Flask(__name__)
 # configura a conexão com o banco de dados
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///contact_db.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS '] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 api = Api(app)
 
 

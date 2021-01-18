@@ -12,9 +12,20 @@ class ContactModel(db.Model):
         self.name = name
         self.phone = phone
 
+    def json(self):
+        return {
+            'contact_id': self.contact_id,
+            'name': self.name,
+            'phone': self.phone
+        }
+
     @classmethod
     def find_contact(cls, phone):
         find_phone = cls.query.filter_by(phone=phone).first()
         if find_phone:
             return find_phone
         return False
+
+    def save_contact(self):
+        db.session.add(self)
+        db.session.commit()
