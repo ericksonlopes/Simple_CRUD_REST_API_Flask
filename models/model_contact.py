@@ -12,4 +12,9 @@ class ContactModel(db.Model):
         self.name = name
         self.phone = phone
 
-
+    @classmethod
+    def find_contact(cls, phone):
+        find_phone = cls.query.filter_by(phone=phone).first()
+        if find_phone:
+            return find_phone
+        return False
