@@ -11,18 +11,26 @@ class Meta(Resource):
 
 class Contacts(Meta):
     def get(self):
-        return {'message': 'retorna'}
+        return {'All Contacts.': [contact.json() for contact in ContactModel.query.all()]}
 
     def post(self, ):
+        # Juntas os itens recebido na request
         data = Contacts.arguments.parse_args()
-        if ContactModel.find_contact({'phone': data['phone'], 'contact_id': False}):
+
+        # Verifica se o item existe
+        if ContactModel.find_contact_or_number({'phone': data['phone'], 'contact_id': False}):
+            # Caso exista, retorna essa mensagem
             return {'Message': f"The number sent already {data['phone']} exists"}
+
         try:
+            # Envia os dados para o construtor da classe
             new_contact = ContactModel(**data)
+            # Tenta criar um novo contato
             new_contact.save_contact()
         except Exception as err:
             return {'Message': f'Ops!, error saving phone : {err}'}
 
+        # Retorna o contato criado em json
         return new_contact.json()
 
 

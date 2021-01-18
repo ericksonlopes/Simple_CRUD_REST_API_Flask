@@ -20,7 +20,7 @@ class ContactModel(db.Model):
         }
 
     @classmethod
-    def find_contact(cls, find_dict):
+    def find_contact_or_number(cls, find_dict):
         # se algum item for encontrado dentro  do item 'phone'
         if find_dict['phone']:
             # verifica se o número ja existe
