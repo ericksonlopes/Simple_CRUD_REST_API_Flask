@@ -20,16 +20,22 @@ class ContactModel(db.Model):
         }
 
     @classmethod
-    def find_contact(cls, phone, contact_id):
-        if contact_id is None:
-            find_phone = cls.query.filter_by(phone=phone).first()
+    def find_contact(cls, find_dict):
+        # se algum item for encontrado dentro  do item 'phone'
+        if find_dict['phone']:
+            # verifica se o número ja existe
+            find_phone = cls.query.filter_by(phone=find_dict['phone']).first()
+            # se existir retorna o mesmo encontrado
             if find_phone:
                 return find_phone
 
-        find_id = cls.query.filter_by(contact_id=contact_id)
+        # mesma função decima
+        if find_dict['contact_id']:
+            find_id = cls.query.filter_by(contact_id=find_dict['contact_id'])
+            if find_id:
+                return find_id
 
-        if find_id:
-            return find_id
+        # se nada for encontrado
         return False
 
     def save_contact(self):
