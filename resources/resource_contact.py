@@ -13,9 +13,9 @@ class Contacts(Meta):
     def get(self):
         return {'message': 'retorna'}
 
-    def post(self):
+    def post(self,):
         data = Contacts.arguments.parse_args()
-        if ContactModel.find_contact(phone=data['phone']):
+        if ContactModel.find_contact(data['phone'], None):
             return {'Message': "The number sent already exists"}
         try:
             new_contact = ContactModel(**data)

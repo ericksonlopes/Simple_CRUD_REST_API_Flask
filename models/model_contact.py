@@ -20,10 +20,16 @@ class ContactModel(db.Model):
         }
 
     @classmethod
-    def find_contact(cls, phone):
-        find_phone = cls.query.filter_by(phone=phone).first()
-        if find_phone:
-            return find_phone
+    def find_contact(cls, phone, contact_id):
+        if contact_id is None:
+            find_phone = cls.query.filter_by(phone=phone).first()
+            if find_phone:
+                return find_phone
+
+        find_id = cls.query.filter_by(contact_id=contact_id)
+
+        if find_id:
+            return find_id
         return False
 
     def save_contact(self):
